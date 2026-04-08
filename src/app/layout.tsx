@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Separator } from "../components/ui/separator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,13 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col font-mono">
+        <h1 className=" flex flex-col py-4 px-12 gap-4 text-base font-semibold text-[#000000] ">
+          AI tools
+        </h1>
+        <Separator className="top-12" />
+        {children}
+      </body>
     </html>
   );
 }
