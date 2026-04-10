@@ -1,25 +1,26 @@
 "use client";
 
-import { geminiTextToImage } from "@/lib/gemini";
+import { geminiRecognition } from "@/lib/ingredientRecognitionAI";
 import { RotateCw, Sparkles, Image } from "lucide-react";
 
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 
-export default function ImageCreator() {
+export default function IngredientRecognition() {
   const [prompt, setPrompt] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [text, setText] = useState("");
 
   const getImage = async () => {
-    const img = await geminiTextToImage(prompt);
+    const res = await geminiRecognition(prompt);
 
-    if (img) {
-      setImageUrl(img);
+    if (res) {
+      setText(res);
     }
   };
 
   const clear = () => {
     setPrompt("");
-    setImageUrl("");
+    setText("");
   };
 
   return (
@@ -27,7 +28,7 @@ export default function ImageCreator() {
       <div className="flex w-145 justify-between gap-4">
         <div className="flex gap-2">
           <Sparkles />
-          <h1 className="text-xl font-semibold">Food image generator</h1>
+          <h1 className="text-xl font-semibold">Ingredient recognition</h1>
         </div>
         <button
           className="py-2 px-3 rounded-md border border-[#E4E4E7]"
@@ -37,12 +38,12 @@ export default function ImageCreator() {
         </button>
       </div>
       <p className="text-[#71717A] text-sm w-145">
-        What food image do you want? Describe it briefly.
+        Describe the food, and AI will detect the ingredients.
       </p>
       <input
         value={prompt}
         className=" w-145 bg-[#FFFFFF] border border-[#E4E4E7] px-5 py-4 rounded-md overflow-x-hidden overflow-y-auto resize-none wrap-break-word whitespace-pre-wrap"
-        placeholder="Хоолны тайлбар"
+        placeholder="Орц тодорхойлох"
         onChange={(event) => {
           setPrompt(event.target.value);
         }}
@@ -58,12 +59,16 @@ export default function ImageCreator() {
       </div>
       <div className="flex gap-2">
         <Image className="size-6" />
-        <h1 className="text-xl font-semibold">Result</h1>
+        <h1 className="text-xl font-semibold">Identified Ingredients</h1>
       </div>
       <div className="w-fit h-fit">
-        {(imageUrl && <img src={imageUrl} className="w-full" />) || (
+        {(text && (
+          <div className="w-145 h-fit border border-#E4E4E7 rounded-lg p-4">
+            <ReactMarkdown>{text}</ReactMarkdown>
+          </div>
+        )) || (
           <p className="text-[#71717A] text-sm w-145">
-            First, enter your text to generate an image.
+            First, enter your text to recognize an ingredients.
           </p>
         )}
       </div>

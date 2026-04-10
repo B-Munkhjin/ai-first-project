@@ -1,12 +1,7 @@
+import ImageAnalysis from "./componentsToUse/ImageAnalysis";
 import ImageCreator from "./componentsToUse/ImageCreator";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import IngredientRecognition from "./componentsToUse/IngredientRecognition";
 
 export default function Home() {
   return (
@@ -19,8 +14,12 @@ export default function Home() {
           </TabsTrigger>
           <TabsTrigger value="Image Creator">Image creator</TabsTrigger>
         </TabsList>
-        <TabsContent value="Image analysis">hello</TabsContent>
-        <TabsContent value="Ingredient recognition">hiiii</TabsContent>
+        <TabsContent value="Image analysis">
+          <ImageAnalysis />
+        </TabsContent>
+        <TabsContent value="Ingredient recognition">
+          <IngredientRecognition />
+        </TabsContent>
         <TabsContent value="Image Creator">
           <ImageCreator />
         </TabsContent>
